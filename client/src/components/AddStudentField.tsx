@@ -12,6 +12,13 @@ export default function AddStudentField({
   placeholder,
   field,
 }: IStudentParams): JSX.Element {
-  // eslint-disable-next-line
-  return <TextField label={label} placeholder={placeholder} {...field} />;
+  return (
+    <TextField
+      variant="outlined"
+      label={label}
+      placeholder={placeholder}
+      // eslint-disable-next-line
+      {...field}
+    />
+  );
 }

@@ -31,8 +31,8 @@ export function AddStudent({ onSubmit }: IAddStudentProps): JSX.Element {
         margin: "auto",
         position: "relative",
         top: "100px",
-        width: "335px",
-        height: "380px",
+        width: "350px",
+        height: "530px",
         borderRadius: "10px",
       }}
     >
@@ -43,7 +43,7 @@ export function AddStudent({ onSubmit }: IAddStudentProps): JSX.Element {
           top: "15px",
           left: "0px",
           padding: "20px 10px 5px 20px",
-          backgroundColor: "#3f51b59c",
+          backgroundColor: "rgb(228, 227, 227)",
         }}
       >
         <Typography variant="h6" gutterBottom>
@@ -61,12 +61,12 @@ export function AddStudent({ onSubmit }: IAddStudentProps): JSX.Element {
           <div
             style={{
               position: "relative",
-              left: "70px",
-              padding: "10px",
+              textAlign: "center",
+              padding: "30px 10px 10px 10px",
             }}
           >
             <Form>
-              <div>
+              <div className="StudentInput">
                 <Field
                   name="firstName"
                   placeholder="Ex: John"
@@ -74,7 +74,7 @@ export function AddStudent({ onSubmit }: IAddStudentProps): JSX.Element {
                   label="First Name"
                 />
               </div>
-              <div>
+              <div className="StudentInput">
                 <Field
                   name="lastName"
                   placeholder="Ex: Doe"
@@ -82,7 +82,7 @@ export function AddStudent({ onSubmit }: IAddStudentProps): JSX.Element {
                   label="Last Name"
                 />
               </div>
-              <div>
+              <div className="StudentInput">
                 <Field
                   name="age"
                   placeholder="Ex: 3, 4, 5..."
@@ -90,7 +90,7 @@ export function AddStudent({ onSubmit }: IAddStudentProps): JSX.Element {
                   label="Age"
                 />
               </div>
-              <div>
+              <div className="StudentInput">
                 <Field
                   name="grade"
                   placeholder="Ex: JK, SK, 1..."
@@ -98,7 +98,7 @@ export function AddStudent({ onSubmit }: IAddStudentProps): JSX.Element {
                   label="Grade"
                 />
               </div>
-              <div>
+              <div className="StudentInput">
                 <Field
                   name="email"
                   placeholder="Ex: name@address.com"
@@ -111,10 +111,12 @@ export function AddStudent({ onSubmit }: IAddStudentProps): JSX.Element {
                   position: "relative",
                   textAlign: "right",
                   paddingTop: "20px",
-                  left: "-85px",
+                  left: "-15px",
                 }}
               >
-                <Button type="submit">Submit</Button>
+                <Button variant="contained" type="submit">
+                  Submit
+                </Button>
               </div>
             </Form>
           </div>
