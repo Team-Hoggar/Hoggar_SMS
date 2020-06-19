@@ -93,7 +93,7 @@ export function AddStudent({ onSubmit }: IAddStudentProps): JSX.Element {
           resetForm();
         }}
       >
-        {({ errors }) => (
+        {({ errors, touched }) => (
           <div
             style={{
               position: "relative",
@@ -103,7 +103,7 @@ export function AddStudent({ onSubmit }: IAddStudentProps): JSX.Element {
           >
             <Form>
               <RedTooltip
-                open={!!errors.firstName}
+                open={!!errors.firstName && touched.firstName}
                 title={errors.firstName ? errors.firstName : ""}
                 placement="right"
               >
@@ -118,7 +118,7 @@ export function AddStudent({ onSubmit }: IAddStudentProps): JSX.Element {
                 </div>
               </RedTooltip>
               <RedTooltip
-                open={!!errors.lastName}
+                open={!!errors.lastName && touched.lastName}
                 title={errors.lastName ? errors.lastName : ""}
                 placement="right"
               >
@@ -149,7 +149,7 @@ export function AddStudent({ onSubmit }: IAddStudentProps): JSX.Element {
                 />
               </div>
               <RedTooltip
-                open={!!errors.email}
+                open={!!errors.email && touched.email}
                 title={errors.email ? errors.email : ""}
                 placement="right"
               >
