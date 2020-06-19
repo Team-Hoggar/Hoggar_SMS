@@ -1,5 +1,6 @@
 import * as React from "react";
-import { Button, Typography } from "@material-ui/core";
+import { Button, Typography, Tooltip } from "@material-ui/core";
+import { withStyles, Theme, makeStyles } from "@material-ui/core/styles";
 import { Formik, Form, Field } from "formik";
 import AddStudentField from "./AddStudentField";
 
@@ -14,6 +15,41 @@ export interface Values {
 export interface IAddStudentProps {
   onSubmit: (values: Values) => void;
 }
+
+function validateEmail(value: string) {
+  let error;
+  if (!value) {
+    error = "";
+  } else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(value)) {
+    error = "Invalid email address";
+  }
+  return error;
+}
+
+function validateFirstName(value: string) {
+  let error;
+  if (!value) {
+    error = "Please enter a first name";
+  }
+  return error;
+}
+
+function validateLastName(value: string) {
+  let error;
+  if (!value) {
+    error = "Please enter a last name";
+  }
+  return error;
+}
+
+const RedTooltip = withStyles((theme: Theme) => ({
+  tooltip: {
+    backgroundColor: theme.palette.error.main,
+    color: "white",
+    boxShadow: theme.shadows[3],
+    fontSize: 15,
+  },
+}))(Tooltip);
 
 export function AddStudent({ onSubmit }: IAddStudentProps): JSX.Element {
   const initialFormValues: Values = {
@@ -57,7 +93,7 @@ export function AddStudent({ onSubmit }: IAddStudentProps): JSX.Element {
           resetForm();
         }}
       >
-        {() => (
+        {({ errors }) => (
           <div
             style={{
               position: "relative",
@@ -66,22 +102,36 @@ export function AddStudent({ onSubmit }: IAddStudentProps): JSX.Element {
             }}
           >
             <Form>
-              <div className="StudentInput">
-                <Field
-                  name="firstName"
-                  placeholder="Ex: John"
-                  component={AddStudentField}
-                  label="First Name"
-                />
-              </div>
-              <div className="StudentInput">
-                <Field
-                  name="lastName"
-                  placeholder="Ex: Doe"
-                  component={AddStudentField}
-                  label="Last Name"
-                />
-              </div>
+              <RedTooltip
+                open={!!errors.firstName}
+                title={errors.firstName ? errors.firstName : ""}
+                placement="right"
+              >
+                <div className="StudentInput">
+                  <Field
+                    name="firstName"
+                    placeholder="Ex: John"
+                    component={AddStudentField}
+                    label="First Name"
+                    validate={validateFirstName}
+                  />
+                </div>
+              </RedTooltip>
+              <RedTooltip
+                open={!!errors.lastName}
+                title={errors.lastName ? errors.lastName : ""}
+                placement="right"
+              >
+                <div className="StudentInput">
+                  <Field
+                    name="lastName"
+                    placeholder="Ex: Doe"
+                    component={AddStudentField}
+                    label="Last Name"
+                    validate={validateLastName}
+                  />
+                </div>
+              </RedTooltip>
               <div className="StudentInput">
                 <Field
                   name="age"
@@ -98,19 +148,26 @@ export function AddStudent({ onSubmit }: IAddStudentProps): JSX.Element {
                   label="Grade"
                 />
               </div>
-              <div className="StudentInput">
-                <Field
-                  name="email"
-                  placeholder="Ex: name@address.com"
-                  component={AddStudentField}
-                  label="E-mail"
-                />
-              </div>
+              <RedTooltip
+                open={!!errors.email}
+                title={errors.email ? errors.email : ""}
+                placement="right"
+              >
+                <div className="StudentInput">
+                  <Field
+                    name="email"
+                    placeholder="Ex: name@address.com"
+                    component={AddStudentField}
+                    validate={validateEmail}
+                    label="E-mail"
+                  />
+                </div>
+              </RedTooltip>
               <div
                 style={{
                   position: "relative",
                   textAlign: "right",
-                  paddingTop: "20px",
+                  top: "20px",
                   left: "-15px",
                 }}
               >
