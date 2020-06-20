@@ -4,6 +4,7 @@ import { generate } from "shortid";
 import "./App.css";
 
 import { AddStudentButton, StudentTable, Navbar } from "./components";
+import { StudentData } from "./types";
 
 // export async function getStudents(): Promise<StudentData> {
 //   const { data } = await axios.get<IStudentDataResponse>(
@@ -16,7 +17,7 @@ import { AddStudentButton, StudentTable, Navbar } from "./components";
 // }
 
 function App(): JSX.Element {
-  const [rows, setRows] = useState([
+  const [rows, setRows] = useState<StudentData[]>([
     {
       // Feed MySQL database through here using axios, replace placeholder data
       id: "45",

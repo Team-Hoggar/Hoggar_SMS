@@ -2,12 +2,16 @@ import * as React from "react";
 import { Button, Typography, Tooltip } from "@material-ui/core";
 import { withStyles, Theme, makeStyles } from "@material-ui/core/styles";
 import { Formik, Form, Field } from "formik";
-import AddStudentField from "./AddStudentField";
+import {
+  AddStudentField,
+  AddStudentSelectField,
+  AddStudentNumField,
+} from "./AddStudentField";
 
 export interface Values {
   firstName: string;
   lastName: string;
-  age: number;
+  age?: number;
   grade: string;
   email: string;
 }
@@ -19,7 +23,7 @@ export interface IAddStudentProps {
 function validateEmail(value: string) {
   let error;
   if (!value) {
-    error = "";
+    error = "Please enter an e-mail address";
   } else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(value)) {
     error = "Invalid email address";
   }
@@ -42,6 +46,22 @@ function validateLastName(value: string) {
   return error;
 }
 
+function validateGrade(value: string) {
+  let error;
+  if (!value) {
+    error = "Please enter a grade";
+  }
+  return error;
+}
+
+function validateAge(value: string) {
+  let error;
+  if (!value || Number(value) < 1 || Number(value) > 25) {
+    error = "Please enter a valid age";
+  }
+  return error;
+}
+
 const RedTooltip = withStyles((theme: Theme) => ({
   tooltip: {
     backgroundColor: theme.palette.error.main,
@@ -55,7 +75,7 @@ export function AddStudent({ onSubmit }: IAddStudentProps): JSX.Element {
   const initialFormValues: Values = {
     firstName: "",
     lastName: "",
-    age: 0,
+    age: undefined,
     grade: "",
     email: "",
   };
@@ -132,22 +152,36 @@ export function AddStudent({ onSubmit }: IAddStudentProps): JSX.Element {
                   />
                 </div>
               </RedTooltip>
-              <div className="StudentInput">
-                <Field
-                  name="age"
-                  placeholder="Ex: 3, 4, 5..."
-                  component={AddStudentField}
-                  label="Age"
-                />
-              </div>
-              <div className="StudentInput">
-                <Field
-                  name="grade"
-                  placeholder="Ex: JK, SK, 1..."
-                  component={AddStudentField}
-                  label="Grade"
-                />
-              </div>
+              <RedTooltip
+                open={!!errors.age && touched.age}
+                title={errors.age ? errors.age : ""}
+                placement="right"
+              >
+                <div className="StudentInput">
+                  <Field
+                    name="age"
+                    placeholder="Ex: 3, 4, 5..."
+                    component={AddStudentNumField}
+                    label="Age"
+                    validate={validateAge}
+                  />
+                </div>
+              </RedTooltip>
+              <RedTooltip
+                open={!!errors.grade && touched.grade}
+                title={errors.grade ? errors.grade : ""}
+                placement="right"
+              >
+                <div className="StudentInput">
+                  <Field
+                    name="grade"
+                    placeholder="Ex: JK, SK, 1..."
+                    component={AddStudentSelectField}
+                    label="Grade"
+                    validate={validateGrade}
+                  />
+                </div>
+              </RedTooltip>
               <RedTooltip
                 open={!!errors.email && touched.email}
                 title={errors.email ? errors.email : ""}
